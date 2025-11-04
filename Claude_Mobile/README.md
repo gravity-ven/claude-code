@@ -16,14 +16,31 @@ This folder contains the **AIA (Supreme Intelligence)** system - your personal J
 
 ## 📥 Installation
 
-To use AIA globally in Claude Code:
+**Clone and Install:**
 
 ```bash
-# Copy AIA skill to your Claude skills directory
-cp -r aia ~/.claude/skills/
+# Clone the repository
+cd ~/Documents/GitHub
+git clone https://github.com/gravity-ven/Claude_Code.git
+cd Claude_Code/Claude_Mobile
 
-# Copy supreme hierarchy doc
+# Install AIA globally
+cp -r aia ~/.claude/skills/
 cp AIA_IS_SUPREME.md ~/.claude/
+
+# Verify installation
+ls -la ~/.claude/skills/aia/
+```
+
+**Or install directly from GitHub:**
+
+```bash
+# Quick install (one command)
+git clone https://github.com/gravity-ven/Claude_Code.git /tmp/aia-install && \
+cp -r /tmp/aia-install/Claude_Mobile/aia ~/.claude/skills/ && \
+cp /tmp/aia-install/Claude_Mobile/AIA_IS_SUPREME.md ~/.claude/ && \
+rm -rf /tmp/aia-install && \
+echo "✅ AIA installed!"
 ```
 
 ## ✅ Verify Installation
@@ -49,13 +66,21 @@ AIA should auto-load on next Claude Code session. Look for:
 To sync AIA updates back to this repo:
 
 ```bash
+# Navigate to repo
+cd ~/Documents/GitHub/Claude_Code/Claude_Mobile
+
 # Copy from global to repo
 cp -r ~/.claude/skills/aia ./
 cp ~/.claude/AIA_IS_SUPREME.md ./
 
 # Commit and push
+cd ~/Documents/GitHub/Claude_Code
 git add .
-git commit -m "Update AIA system"
+git commit -m "Update AIA system
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
 git push
 ```
 
