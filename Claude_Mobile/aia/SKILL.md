@@ -153,35 +153,51 @@ Aia tracks:
 
 ## Data Storage
 
-Aia maintains several databases:
+**AIA USES POSTGRESQL EXCLUSIVELY** - All data stored in robust, production-grade database.
 
-### Interaction Log
-**Location**: `~/.claude/aia-data/interactions.db`
-- Complete conversation history
-- Tool usage records
-- File modifications
-- Command executions
+### PostgreSQL Database: `aia_intelligence`
 
-### Personality Profile
-**Location**: `~/.claude/aia-data/personality.json`
-- Communication preferences
-- Work style patterns
-- Technology preferences
-- Decision patterns
+**Connection**: `postgresql://localhost:5432/aia_intelligence`
 
-### Project Context
-**Location**: `~/.claude/aia-data/projects.db`
-- Project metadata
-- File associations
-- Timeline data
-- State information
+**Tables:**
 
-### Learning Patterns
-**Location**: `~/.claude/aia-data/patterns.json`
-- Workflow patterns
-- Efficiency metrics
-- Optimization suggestions
-- Behavioral trends
+1. **`interactions`** - Complete conversation history
+   - Conversation logs with timestamps
+   - Tool usage records
+   - File modifications
+   - Command executions
+   - Full context preservation
+
+2. **`personality`** - Your learned preferences
+   - Communication style patterns
+   - Work style preferences
+   - Technology choices
+   - Decision-making patterns
+   - Coding preferences
+
+3. **`projects`** - Project intelligence
+   - Project metadata
+   - File associations
+   - Timeline tracking
+   - State information
+   - Architecture decisions
+
+4. **`learning_patterns`** - Behavioral analysis
+   - Workflow patterns
+   - Efficiency metrics
+   - Optimization insights
+   - Behavioral trends
+   - Predictive analytics
+
+### Why PostgreSQL?
+
+- ✅ **Production-grade** reliability
+- ✅ **ACID compliance** - Data integrity guaranteed
+- ✅ **Concurrent access** - Multiple sessions supported
+- ✅ **Advanced queries** - Complex pattern analysis
+- ✅ **Scalability** - Handles massive datasets
+- ✅ **JSON support** - Flexible schema evolution
+- ✅ **Full-text search** - Fast context retrieval
 
 ## Privacy & Security
 
@@ -275,22 +291,34 @@ Aia continuously:
 - Monthly database optimization
 - Quarterly learning model refinement
 
+### PostgreSQL Setup
+
+**First-time setup:**
+```bash
+# Run the setup script
+cd ~/.claude/skills/aia
+bash setup_postgresql.sh
+```
+
 ### Manual Maintenance
 ```bash
 # View Aia statistics
-aia stats
+psql -d aia_intelligence -c "SELECT COUNT(*) as interactions FROM interactions;"
 
 # Export all data
-aia export --output ~/aia-backup.json
+pg_dump aia_intelligence > ~/aia-backup.sql
 
 # Clear old data (keeps last 90 days)
-aia cleanup --days 90
+psql -d aia_intelligence -c "DELETE FROM interactions WHERE timestamp < NOW() - INTERVAL '90 days';"
 
 # Reset personality profile
-aia reset-profile
+psql -d aia_intelligence -c "TRUNCATE personality;"
 
-# Analyze learning effectiveness
-aia analyze-learning
+# View recent activity
+psql -d aia_intelligence -c "SELECT * FROM recent_interactions LIMIT 10;"
+
+# Check database size
+psql -d aia_intelligence -c "SELECT pg_size_pretty(pg_database_size('aia_intelligence'));"
 ```
 
 ## Troubleshooting
@@ -373,9 +401,11 @@ Aia embodies these principles:
 ---
 
 **Status**: Production Ready
-**Version**: 1.0.0
+**Version**: 2.0.0
 **Last Updated**: 2025-11-04
 **Activation**: Automatic & Global
-**Dependencies**: SQLite3, Python 3.8+, Claude Code 1.x
+**Database**: PostgreSQL 13+ (REQUIRED)
+**Dependencies**: PostgreSQL 13+, Python 3.8+, psycopg2, Claude Code 1.x
 
 *Aia - Your Personal Intelligence Assistant, Always Learning, Always Ready*
+*Powered by PostgreSQL for enterprise-grade intelligence*
