@@ -1,0 +1,15 @@
+{
+  "watcher_id": "watcher_1761908520_claude_output",
+  "template": "claude_output",
+  "created_at": "2025-10-31T22:02:00.972504",
+  "status": "created",
+  "description": "Monitor Claude Code output for completion",
+  "watch_type": "file",
+  "poll_interval": 5,
+  "max_wait_time": 3600,
+  "success_marker": "<<COMPLETE>>",
+  "failure_marker": "<<ERROR>>",
+  "parser_script": "parse_claude_output.py",
+  "action_script": "continue_claude_processing.sh",
+  "watch_path": "/tmp/test_output.txt"
+}

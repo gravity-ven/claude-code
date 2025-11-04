@@ -1,0 +1,50 @@
+{
+  "watcher_config": {
+    "enabled": true,
+    "auto_start_on_session": true,
+    "resume_on_restart": true,
+    "default_poll_interval": 5,
+    "default_max_wait_time": 3600,
+    "log_retention_days": 7
+  },
+  "watch_templates": {
+    "claude_output": {
+      "description": "Monitor Claude Code output for completion",
+      "watch_type": "file",
+      "poll_interval": 5,
+      "max_wait_time": 3600,
+      "success_marker": "<<COMPLETE>>",
+      "failure_marker": "<<ERROR>>",
+      "parser_script": "parse_claude_output.py",
+      "action_script": "continue_claude_processing.sh"
+    },
+    "build_process": {
+      "description": "Monitor build process completion",
+      "watch_type": "file",
+      "poll_interval": 10,
+      "max_wait_time": 1800,
+      "success_marker": "Build succeeded",
+      "failure_marker": "Build failed",
+      "parser_script": "parse_build_output.py",
+      "action_script": "handle_build_result.sh"
+    },
+    "test_runner": {
+      "description": "Monitor test execution results",
+      "watch_type": "file",
+      "poll_interval": 5,
+      "max_wait_time": 1800,
+      "success_marker": "All tests passed",
+      "failure_marker": "Tests failed",
+      "parser_script": "parse_test_results.py",
+      "action_script": "handle_test_results.sh"
+    },
+    "external_process": {
+      "description": "Monitor external process by PID",
+      "watch_type": "process",
+      "poll_interval": 10,
+      "max_wait_time": 3600,
+      "parser_script": "parse_process_output.py",
+      "action_script": "handle_process_completion.sh"
+    }
+  }
+}
